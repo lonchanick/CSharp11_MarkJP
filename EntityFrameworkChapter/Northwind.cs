@@ -1,6 +1,7 @@
 
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 namespace Packt.Shared;
 public class Northwind: DbContext
 {
@@ -17,6 +18,7 @@ public class Northwind: DbContext
         // ForegroundColor= previousColor;
 
         optionsBuilder.UseSqlite(filenameParameter);
+        optionsBuilder.LogTo(WriteLine, new[]{RelationalEventId.CommandExecuting}).EnableSensitiveDataLogging();
     }
     public DbSet<Product> Products {get; set;}
     public DbSet<Category> Categories {get; set;}
