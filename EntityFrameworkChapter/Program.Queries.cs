@@ -1,25 +1,71 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;//wtf is this?
 using Packt.Shared;
+// using Microsoft.EntityFrameworkCore.ChangeTracking; //CollectionEntry
 
 partial class Program
 {
     public static void QueryingCategories()
     {
-        using (Northwind NorthWindDB = new())
+        using (Northwind db = new())
         {
-            IQueryable<Category>? categories = NorthWindDB.Categories;
-            // ?.Include(c => c.Products);
+            IQueryable<Category>? categories; // = NorthWindDB.Categories;
+            // ?.Include(c => c.Products); //coment this to test the lazy loading pattern and explicit loading pattern
            
-            Info(categories?.ToQueryString()??"NullQueryString");
-            
-            if(categories is null || !categories.Any())
+
+            db.ChangeTracker.LazyLoadingEnabled=false;
+
+            Write("\nEnable Eager loading Y/N?");
+            bool eagerLoading = ReadKey(intercept:true).Key == ConsoleKey.Y;
+
+            bool explicitLoading = false;
+
+            if(eagerLoading)
             {
-            Fail("No Category(ies) Found") ;
-            return;
+                categories = db.Categories.Include(c => c.Products);
+            }else
+            {
+                categories = db.Categories;
+                Write("\nEnable Explicit loading Y/N?");
+                explicitLoading = ReadKey(intercept:true).Key == ConsoleKey.Y;
+            }
+            // bool explicitOption;
+            
+            if(explicitLoading)
+            {
+                WriteLine("\nExplicit Loading is: {0} so ...",explicitLoading);
+                foreach(var c in categories)
+                {
+                    Write($"\nExplicit Products loading for category {c.CategoryName} Y/N?");
+                    // explicitOption = ReaKey(intercept:true).Key == ConsoleKey.Y;
+                    ConsoleKeyInfo key = ReadKey(intercept: true);
+                    if(key.Key == ConsoleKey.Y)
+                    {   
+                        /**/
+                        //wtf is this
+                        CollectionEntry<Category, Product> products =
+                        db.Entry(c).Collection(c2 => c2.Products);
+                        if (!products.IsLoaded) products.Load();
+                        /**/
+                        foreach(Product? p in products.CurrentValue!)
+                            WriteLine(p);
+                        
+                    }
+
+                }
             }
 
-            foreach(var c in categories)
-                WriteLine("categoty {0} has {1} products", c.CategoryName, c.Products.Count());
+
+            // Info(categories?.ToQueryString()??"NullQueryString");
+            
+            // if(categories is null || !categories.Any())
+            // {
+            // Fail("No Category(ies) Found") ;
+            // return;
+            // }
+
+            // foreach(var c in categories)
+            //     WriteLine("categoty {0} has {1} products", c.CategoryName, c.Products.Count());
         }
         
     }
