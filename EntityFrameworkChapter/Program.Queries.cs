@@ -7,7 +7,8 @@ partial class Program
     {
         using (Northwind NorthWindDB = new())
         {
-            IQueryable<Category>? categories = NorthWindDB.Categories?.Include(c => c.Products);
+            IQueryable<Category>? categories = NorthWindDB.Categories;
+            // ?.Include(c => c.Products);
            
             Info(categories?.ToQueryString()??"NullQueryString");
             
@@ -70,6 +71,7 @@ partial class Program
         using (Northwind db = new())
         {
             IQueryable<Product>? products = db.Products?
+            .TagWith("Products with higher price than ..")
             .Where(p => p.Cost > inputOut);
 
             Info(products?.ToQueryString()??"NullQueryString");
@@ -81,9 +83,64 @@ partial class Program
             }
 
 
-            WriteLine("Products with a price higher than {0:$#,##0.00}:\n", inputOut);
+            WriteLine("Products with higher price than {0:$#,##0.00}:\n", inputOut);
             foreach(var p in products!)
                 WriteLine("Product: {0}\nPrice: {1:$#,##0.00}\nStock: {2}\n", p.ProductName, p.Cost,p.Stock);
+        }
+    }
+
+    public static void QueryingWithLike()
+    {
+
+        string input;
+        Write("Searching product: ");
+        input =ReadLine()!;
+        if(string.IsNullOrEmpty(input))
+        {
+            WriteLine("Bad request"); 
+            return;
+        }
+        
+        using(Northwind db = new())
+        {
+            IQueryable<Product>? queryResult = db.Products?
+            .Where(p => EF.Functions.Like(p.ProductName,$"%{input}%"));
+
+            if((queryResult is null) || (!queryResult.Any()))
+            {
+                WriteLine("No product found");
+            }
+
+            foreach(Product p in queryResult!)
+                WriteLine(p);
+                // WriteLine($"\nProduct: {p.ProductName}\nDeprecated: {p.Discontinued}\n");
+        }
+    }
+    public static void GetRandomProduct()
+    {
+        using (Northwind db = new())
+        {
+            WriteLine("\tGetting a random record from products");
+            int? countProduct = db.Products?.Count();
+            
+            if(countProduct is null)
+            {
+                Fail("Data base table is empty");
+                return;
+            }
+
+            var p = db.Products!
+            .FirstOrDefault(p => p.ProductId == (int)(EF.Functions.Random() * countProduct));
+
+            if(p is null)
+            {
+                Fail($"Product Id: {countProduct} does not exist");
+                return;
+            }
+            Fail("Product Found!");
+            WriteLine(p);
+
+
         }
     }
 }

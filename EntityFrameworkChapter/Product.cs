@@ -21,4 +21,10 @@ public class Product
     // to the Categories table
     public int CategoryId {get; set;}
     public virtual Category category {get; set;}= null!;
+
+
+    public override string ToString()
+    {
+        return $"Id: {ProductId}\nProduct: {ProductName}\nPrice: {Cost}\nDiscontinued: {Discontinued}\n";
+    }
 }

@@ -18,7 +18,10 @@ public class Northwind: DbContext
         // ForegroundColor= previousColor;
 
         optionsBuilder.UseSqlite(filenameParameter);
-        optionsBuilder.LogTo(WriteLine, new[]{RelationalEventId.CommandExecuting}).EnableSensitiveDataLogging();
+
+        //enables to write sensitive log data to the console 
+        //optionsBuilder.LogTo(WriteLine, new[]{RelationalEventId.CommandExecuting}).EnableSensitiveDataLogging();
+        
     }
     public DbSet<Product> Products {get; set;}
     public DbSet<Category> Categories {get; set;}
@@ -34,6 +37,7 @@ public class Northwind: DbContext
         .IsRequired()
         .HasMaxLength(15);
 
+        // added to "fix" the lack of decimal support in SQLite
         if(Database.ProviderName?.Contains("Sqlite")?? false)
         {
             // added to "fix" the lack of decimal support in SQLite
@@ -41,6 +45,12 @@ public class Northwind: DbContext
             .Property(p => p.Cost)
             .HasConversion<double>();
         }
+
+        //Defining global filters.
+        // Northwind products can be discontinued, so it might be useful to ensure that discontinued products are
+        // never returned in results, even if the programmer does not use Where to filter them out in their queries
+        modelBuilder.Entity<Product>()
+        .HasQueryFilter(p=>!p.Discontinued);
 
     }
     

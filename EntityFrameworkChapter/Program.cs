@@ -4,9 +4,11 @@ using Packt.Shared;
 
 WriteLine();
 
-// QueryingCategories();
+QueryingCategories();
 // FilteredIncludes();
-QueryingProducts();
+// QueryingProducts();
+// QueryingWithLike();
+// GetRandomProduct();
 
 WriteLine();
 WriteLine();
