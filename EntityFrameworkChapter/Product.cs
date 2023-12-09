@@ -27,4 +27,10 @@ public class Product
     {
         return $"Id: {ProductId}\nProduct: {ProductName}\nPrice: {Cost}\nDiscontinued: {Discontinued}\n";
     }
+    public static void TableMood(ICollection<Product> products)
+    {
+        WriteLine("|{0,-3}|{1,-30}|{2,5}|{3,6}|{4,6}|","Id","Product Name","Cost","Stock","Disc");
+        foreach(var p in products)
+            WriteLine("|{0,-3}|{1,-30}|{2,-5}|{3,-6}|{4,-6}|",p.ProductId,p.ProductName,p.Cost,p.Stock,p.Discontinued);
+    }
 }
