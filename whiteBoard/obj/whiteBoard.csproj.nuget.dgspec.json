@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\.NET FOLDER\\whiteBoardToPractice\\whiteBoard\\whiteBoard.csproj": {}
+    "D:\\.NET FOLDER\\CSharp_11_Book_ALL_FILES\\whiteBoard\\whiteBoard.csproj": {}
   },
   "projects": {
-    "D:\\.NET FOLDER\\whiteBoardToPractice\\whiteBoard\\whiteBoard.csproj": {
+    "D:\\.NET FOLDER\\CSharp_11_Book_ALL_FILES\\whiteBoard\\whiteBoard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\.NET FOLDER\\whiteBoardToPractice\\whiteBoard\\whiteBoard.csproj",
+        "projectUniqueName": "D:\\.NET FOLDER\\CSharp_11_Book_ALL_FILES\\whiteBoard\\whiteBoard.csproj",
         "projectName": "whiteBoard",
-        "projectPath": "D:\\.NET FOLDER\\whiteBoardToPractice\\whiteBoard\\whiteBoard.csproj",
+        "projectPath": "D:\\.NET FOLDER\\CSharp_11_Book_ALL_FILES\\whiteBoard\\whiteBoard.csproj",
         "packagesPath": "C:\\Users\\israel\\.nuget\\packages\\",
-        "outputPath": "D:\\.NET FOLDER\\whiteBoardToPractice\\whiteBoard\\obj\\",
+        "outputPath": "D:\\.NET FOLDER\\CSharp_11_Book_ALL_FILES\\whiteBoard\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\israel\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

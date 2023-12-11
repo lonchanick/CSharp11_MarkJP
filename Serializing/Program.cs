@@ -7,6 +7,6 @@ partial class Program
     {
         // XmlSerializing();
         // JsonSerializing();
-        JsonSerializingSystemTextJsonSerializingFasterLibrary();
+        //JsonSerializingSystemTextJsonSerializingFasterLibrary();
     }
 }
