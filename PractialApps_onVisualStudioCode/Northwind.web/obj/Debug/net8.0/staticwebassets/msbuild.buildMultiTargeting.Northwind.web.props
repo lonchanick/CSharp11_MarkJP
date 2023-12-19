@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Northwind.web.props" />
+</Project>
